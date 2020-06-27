@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    gitlab:
+      image: 'gitlab/gitlab-ce:latest'
+      restart: always
+      hostname: '${VIRTUAL_HOST}'
+      environment:
+        - VIRTUAL_HOST=${VIRTUAL_HOST}
+        - LETSENCRYPT_HOST=${VIRTUAL_HOST}
+        - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      volumes:
+        - '/srv/gitlab/config:/etc/gitlab'
+        - '/srv/gitlab/logs:/var/log/gitlab'
+        - '/srv/gitlab/data:/var/opt/gitlab'
+        
+networks:
+    default:
+        external:
+            name: webproxy
